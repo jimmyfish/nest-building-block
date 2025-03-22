@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Exchange {
+  id        Int       @id @default(autoincrement())
+  name      String
+  endpoint  String
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime? @map("updated_at") @db.Timestamptz()
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
+  symbols   Symbol[]
+
+  @@map("exchanges")
+}
+
+model Symbol {
+  id         Int       @id @default(autoincrement())
+  name       String
+  pair       String
+  exchangeId Int       @map("exchange_id")
+  exchange   Exchange  @relation(fields: [exchangeId], references: [id])
+  createdAt  DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt  DateTime? @map("updated_at") @db.Timestamptz()
+  deletedAt  DateTime? @map("deleted_at") @db.Timestamptz()
+
+  @@index([exchangeId, pair])
+  @@map("pairs")
+}
+
+model User {
+  id        Int       @id @default(autoincrement())
+  name      String    @map("name")
+  username  String    @unique
+  password  String
+  createdAt DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt DateTime? @map("updated_at") @db.Timestamptz()
+  deletedAt DateTime? @map("deleted_at") @db.Timestamptz()
+
+  @@map("users")
+}
+
+model UserSession {
+  id          Int       @id @default(autoincrement())
+  userId      Int       @map("user_id")
+  tokenDigest String    @unique @map("token_digest") @db.VarChar(255)
+  expiredAt   DateTime  @map("expired_at") @db.Timestamptz()
+  createdAt   DateTime  @default(now()) @map("created_at") @db.Timestamptz()
+  updatedAt   DateTime? @map("updated_at") @db.Timestamptz()
+  deletedAt   DateTime? @map("deleted_at") @db.Timestamptz()
+
+  @@unique([userId, tokenDigest])
+  @@index([userId, tokenDigest])
+  @@map("user_sessions")
+}
