@@ -1,10 +1,8 @@
+import { User } from './user';
+
 export interface RequestBody {
   headers?: any;
-  user?: {
-    id: string;
-    name: string;
-    username: string;
-  };
+  user?: User;
   query?: {
     page: number;
     perPage: number;
