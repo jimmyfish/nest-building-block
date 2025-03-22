@@ -2,7 +2,7 @@
 
 ## Overview
 
-Tenacity is a backend application built with [NestJS](https://nestjs.com/) and [Prisma](https://www.prisma.io/). It provides a modular architecture with a focus on scalability and maintainability.
+Here is a backend application built with [NestJS](https://nestjs.com/) and [Prisma](https://www.prisma.io/). It provides a modular architecture with a focus on scalability and maintainability.
 
 ## Features
 
