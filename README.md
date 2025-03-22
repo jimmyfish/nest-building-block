@@ -1,4 +1,4 @@
-# Tenacity
+# NestJS Skeleton (Building block - foundation)
 
 ## Overview
 
