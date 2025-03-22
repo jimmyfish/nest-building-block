@@ -80,7 +80,7 @@ JWT_SECRET=your_secret_key
 Run Prisma migrations:
 
 ```sh
-npx prisma migrate dev --name init
+npx prisma migrate deploy
 ```
 
 ## Testing
